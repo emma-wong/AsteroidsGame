@@ -1,15 +1,113 @@
 //your variable declarations here
+SpaceShip ship;
+Stars[] star;
+boolean leftPressed = false;
+boolean rightPressed = false;
+boolean upPressed = false;
+boolean downPressed = false;
 public void setup() 
 {
   //your code here
+  size(500,500);
+  background(0);
+  ship = new SpaceShip();
+  star = new Stars[100];
+  for (int i = 0; i < star.length; i++) {
+    star[i] = new Stars();
+  }
 }
 public void draw() 
 {
   //your code here
+  background(0);
+  for(int i = 0; i < star.length; i++)
+  {
+    star[i].show();
+  }
+  ship.move();
+  ship.show();
+
+  if (leftPressed == true) {
+    ship.rotate(-5);
+  }
+  if (rightPressed == true) {
+    ship.rotate(5);
+  }
+  if (upPressed == true) {
+    ship.accelerate(0.1);
+  }
+  if(downPressed == true) {
+    ship.accelerate(-0.1);
+  }
 }
-class SpaceShip //extends Floater  
+
+public void keyPressed()
+{
+  if (keyCode == UP) {
+    upPressed = true;
+  }
+  if (keyCode == DOWN) {
+    downPressed = true;
+  }
+  if (keyCode == LEFT) {
+    leftPressed = true;
+  }
+  if (keyCode == RIGHT) {
+    rightPressed = true;
+  }
+  if (key == 'b') {
+    ship.accelerate(0);
+    ship.myDirectionX = 0;
+    ship.myDirectionY = 0;
+    ship.rotate((int)(Math.random()*360));
+    ship.myCenterX = (int)(Math.random()*500);
+    ship.myCenterY = (int)(Math.random()*500); 
+  } 
+}
+
+public void keyReleased()
+{
+  if(keyCode == UP) {
+    upPressed = false;
+  }
+  if(keyCode == DOWN) {
+    downPressed = false;
+  }
+  if(keyCode == LEFT) {
+    leftPressed = false;
+  }
+  if(keyCode == RIGHT) {
+    rightPressed = false;
+  }
+}
+
+class SpaceShip extends Floater
 {   
-    //your code here
+  //your code here
+  public SpaceShip()
+  {
+    corners = 3;
+    int [] xC = {-12, -12, 12};
+    int [] yC = {8, -8, 0};
+    xCorners = xC;
+    yCorners = yC;
+    myColor = 255;
+    myCenterX = 250;
+    myCenterY = 250;
+    myDirectionX = 0;
+    myDirectionY = 0;
+    myPointDirection = 0;
+  }
+  public void setX(int x) {myCenterX = x;}
+  public int getX() {return (int)myCenterX;}
+  public void setY(int y) {myCenterY = y;}
+  public int getY() {return (int)myCenterY;}
+  public void setDirectionX(double x) {myDirectionX = x;}
+  public double getDirectionX() {return myDirectionX;}
+  public void setDirectionY(double y) {myDirectionY = y;}
+  public double getDirectionY() {return myDirectionY;}
+  public void setPointDirection(int degrees) {myPointDirection = degrees;}
+  public double getPointDirection() {return myPointDirection;}
 }
 abstract class Floater //Do NOT modify the Floater class! Make changes in the SpaceShip class 
 {   
@@ -75,7 +173,7 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
     stroke(myColor);    
     //convert degrees to radians for sin and cos         
     double dRadians = myPointDirection*(Math.PI/180);                 
-    int xRotatedTranslated, yRotatedTranslated;    
+    int xRotatedTranslated, yRotatedTranslated; 
     beginShape();         
     for(int nI = 0; nI < corners; nI++)    
     {     
@@ -88,3 +186,23 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
   }   
 } 
 
+class Stars
+{
+  private int starX;
+  private int starY;
+  private int starSize;
+
+  public Stars()
+  {
+    starX = (int)(Math.random()*500);
+    starY = (int)(Math.random()*500);
+    starSize = (int)(Math.random()*4);
+  }
+  
+  public void show()
+  {
+    noStroke();
+    fill(255);
+    ellipse(starX, starY, starSize, starSize);
+  }
+}
