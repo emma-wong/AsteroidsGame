@@ -5,6 +5,8 @@ boolean leftPressed = false;
 boolean rightPressed = false;
 boolean upPressed = false;
 boolean downPressed = false;
+ArrayList <Bullet> bullet;
+
 public void setup() 
 {
   //your code here
@@ -12,6 +14,7 @@ public void setup()
   background(0);
   ship = new SpaceShip();
   star = new Stars[100];
+  bullet = new ArrayList <Bullet>();  
   for (int i = 0; i < star.length; i++) {
     star[i] = new Stars();
   }
@@ -56,12 +59,11 @@ public void keyPressed()
     rightPressed = true;
   }
   if (key == 'b') {
-    ship.accelerate(0);
-    ship.myDirectionX = 0;
-    ship.myDirectionY = 0;
-    ship.rotate((int)(Math.random()*360));
-    ship.myCenterX = (int)(Math.random()*500);
-    ship.myCenterY = (int)(Math.random()*500); 
+    ship.setDirectionX(0);
+    ship.setDirectionY(0);
+    ship.setPointDirection((int)(Math.random()*360));
+    ship.setX((int)(Math.random()*500));
+    ship.setY((int)(Math.random()*500)); 
   } 
 }
 
@@ -92,12 +94,37 @@ class SpaceShip extends Floater
     xCorners = xC;
     yCorners = yC;
     myColor = 255;
-    myCenterX = 250;
-    myCenterY = 250;
-    myDirectionX = 0;
-    myDirectionY = 0;
-    myPointDirection = 0;
-  }
+    setX(250);
+    setY(250);
+    setDirectionX(0);
+    setDirectionY(0);
+    setPointDirection(0);
+  } 
+  public void setX(int x) {myCenterX = x;}
+  public int getX() {return (int)myCenterX;}
+  public void setY(int y) {myCenterY = y;}
+  public int getY() {return (int)myCenterY;}
+  public void setDirectionX(double x) {myDirectionX = x;}
+  public double getDirectionX() {return myDirectionX;}
+  public void setDirectionY(double y) {myDirectionY = y;}
+  public double getDirectionY() {return myDirectionY;}
+  public void setPointDirection(int degrees) {myPointDirection = degrees;}
+  public double getPointDirection() {return myPointDirection;} 
+}
+
+class Bullet extends Floater
+{
+private int bulletColor;
+private double dRadians;
+public Bullet(SpaceShip ship) {
+    myCenterX = ship.getX();
+    myCenterY = ship.getY();
+    myPointDirection = ship.getPointDirection();
+    dRadians = myPointDirection*(Math.PI/180);
+    myDirectionX = 5*Math.cos(dRadians) + ship.getDirectionX();
+    myDirectionY = 5*Math.sin(dRadians) + ship.getDirectionY();
+    myColor = color(0,255,255);
+}
   public void setX(int x) {myCenterX = x;}
   public int getX() {return (int)myCenterX;}
   public void setY(int y) {myCenterY = y;}
@@ -108,7 +135,14 @@ class SpaceShip extends Floater
   public double getDirectionY() {return myDirectionY;}
   public void setPointDirection(int degrees) {myPointDirection = degrees;}
   public double getPointDirection() {return myPointDirection;}
+  public void show()
+  {
+    noStroke();
+    fill(myColor);
+    ellipse((int)myCenterX, (int)myCenterY, 5, 5);
+  }
 }
+
 abstract class Floater //Do NOT modify the Floater class! Make changes in the SpaceShip class 
 {   
   protected int corners;  //the number of corners, a triangular floater has 3   
