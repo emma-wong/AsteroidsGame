@@ -5,6 +5,7 @@ boolean leftPressed = false;
 boolean rightPressed = false;
 boolean upPressed = false;
 boolean downPressed = false;
+boolean spacePressed = false;
 ArrayList <Bullet> bullet;
 
 public void setup() 
@@ -42,6 +43,9 @@ public void draw()
   if(downPressed == true) {
     ship.accelerate(-0.1);
   }
+  if (spacePressed == true) {
+    bullet.show();    
+  }
 }
 
 public void keyPressed()
@@ -65,6 +69,9 @@ public void keyPressed()
     ship.setX((int)(Math.random()*500));
     ship.setY((int)(Math.random()*500)); 
   } 
+  if (key == ' ') {
+    spacePressed = true;
+  }
 }
 
 public void keyReleased()
@@ -135,12 +142,12 @@ public Bullet(SpaceShip ship) {
   public double getDirectionY() {return myDirectionY;}
   public void setPointDirection(int degrees) {myPointDirection = degrees;}
   public double getPointDirection() {return myPointDirection;}
-  public void show()
+  /*public void show()
   {
     noStroke();
     fill(myColor);
     ellipse((int)myCenterX, (int)myCenterY, 5, 5);
-  }
+  } */
 }
 
 abstract class Floater //Do NOT modify the Floater class! Make changes in the SpaceShip class 
