@@ -30,6 +30,11 @@ public void draw()
   }
   ship.move();
   ship.show();
+  for(int j = 0; j < bullet.size(); j++)
+  {
+    bullet.get(j).move();
+    bullet.get(j).show();
+  }
 
   if (leftPressed == true) {
     ship.rotate(-5);
@@ -44,7 +49,7 @@ public void draw()
     ship.accelerate(-0.1);
   }
   if (spacePressed == true) {
-    bullet.show();    
+    bullet.add(new Bullet(ship));   
   }
 }
 
@@ -87,6 +92,9 @@ public void keyReleased()
   }
   if(keyCode == RIGHT) {
     rightPressed = false;
+  }
+  if (key == ' ') {
+    spacePressed = false;
   }
 }
 
@@ -142,12 +150,12 @@ public Bullet(SpaceShip ship) {
   public double getDirectionY() {return myDirectionY;}
   public void setPointDirection(int degrees) {myPointDirection = degrees;}
   public double getPointDirection() {return myPointDirection;}
-  /*public void show()
+  public void show()
   {
     noStroke();
-    fill(myColor);
+    fill(255, 0, 0);
     ellipse((int)myCenterX, (int)myCenterY, 5, 5);
-  } */
+  }
 }
 
 abstract class Floater //Do NOT modify the Floater class! Make changes in the SpaceShip class 
