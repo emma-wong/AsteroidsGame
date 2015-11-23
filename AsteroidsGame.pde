@@ -7,6 +7,7 @@ boolean upPressed = false;
 boolean downPressed = false;
 boolean spacePressed = false;
 ArrayList <Bullet> bullet;
+ArrayList <Asteroid> asteroid;
 
 public void setup() 
 {
@@ -18,6 +19,10 @@ public void setup()
   bullet = new ArrayList <Bullet>();  
   for (int i = 0; i < star.length; i++) {
     star[i] = new Stars();
+  }
+  asteroid = new ArrayList <Asteroid>();
+  for (int k = 0; k < 10; k++) {
+    asteroid.add(new Asteroid());
   }
 }
 public void draw() 
@@ -50,6 +55,10 @@ public void draw()
   }
   if (spacePressed == true) {
     bullet.add(new Bullet(ship));   
+  }
+  for(int m = 0; m < asteroid.size(); m++) {
+    asteroid.get(m).move();
+    asteroid.get(m).show();
   }
 }
 
@@ -153,8 +162,65 @@ public Bullet(SpaceShip ship) {
   public void show()
   {
     noStroke();
-    fill(255, 0, 0);
+    fill(255, 0, 0, 100);
     ellipse((int)myCenterX, (int)myCenterY, 5, 5);
+  }
+}
+
+class Asteroid extends Floater
+{
+  private int rotationSpeed;
+  public Asteroid() {
+    corners = 7;
+    int [] xC = {0, -10, -14, -10, 0, 10, 14, 10};
+    int [] yC = {-14, -10, 0, 10, 14, 10, 0, -10};
+    xCorners = xC;
+    yCorners = yC;
+    myColor = 200;
+    myCenterX = (int)(Math.random()*500);
+    myCenterY = (int)(Math.random()*500);
+    myDirectionX = (int)(Math.random()*4-2);
+    myDirectionY = (int)(Math.random()*4-2);
+    myPointDirection = (int)(Math.random()*361);
+    if(Math.random()<.5)
+    {
+      rotationSpeed = (int)(Math.random()*2-3);
+    }
+    else
+    {
+      rotationSpeed = (int)(Math.random()*2+1);
+    }
+  }
+  public void setX(int x) {myCenterX = x;}
+  public int getX() {return (int)myCenterX;}
+  public void setY(int y) {myCenterY = y;}
+  public int getY() {return (int)myCenterY;}
+  public void setDirectionX(double x) {myDirectionX = x;}
+  public double getDirectionX() {return myDirectionX;}
+  public void setDirectionY(double y) {myDirectionY = y;}
+  public double getDirectionY() {return myDirectionY;}
+  public void setPointDirection(int degrees) {myPointDirection = degrees;}
+  public double getPointDirection() {return myPointDirection;}
+  public void move() {
+    rotate(rotationSpeed);
+    myCenterX += myDirectionX;    
+    myCenterY += myDirectionY;       
+    if(myCenterX >width)
+    {     
+      myCenterX = 0;    
+    }    
+    else if (myCenterX<0)
+    {     
+      myCenterX = width;    
+    }    
+    if(myCenterY >height)
+    {    
+      myCenterY = 0;    
+    }   
+    else if (myCenterY < 0)
+    {     
+      myCenterY = height;    
+    }
   }
 }
 
