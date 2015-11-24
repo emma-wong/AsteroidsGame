@@ -6,6 +6,7 @@ boolean rightPressed = false;
 boolean upPressed = false;
 boolean downPressed = false;
 boolean spacePressed = false;
+boolean gameOver = false;
 ArrayList <Bullet> bullet;
 ArrayList <Asteroid> asteroid;
 
@@ -25,10 +26,15 @@ public void setup()
     asteroid.add(new Asteroid());
   }
 }
+
 public void draw() 
 {
   //your code here
   background(0);
+  for(int m = 0; m < asteroid.size(); m++) {
+  asteroid.get(m).move();
+  asteroid.get(m).show();
+  }
   for(int i = 0; i < star.length; i++)
   {
     star[i].show();
@@ -56,9 +62,14 @@ public void draw()
   if (spacePressed == true) {
     bullet.add(new Bullet(ship));   
   }
-  for(int m = 0; m < asteroid.size(); m++) {
-    asteroid.get(m).move();
-    asteroid.get(m).show();
+  if (gameOver == true) {
+   fill(0, 0, 255, 50); 
+   rect(0, 0, 500, 500);
+   fill(255);
+   textSize(35);
+   text("Game Over!", 160, 150);
+   textSize(25);
+   text("Press 'r' to restart.", 145, 200);
   }
 }
 
@@ -85,6 +96,9 @@ public void keyPressed()
   } 
   if (key == ' ') {
     spacePressed = true;
+  }
+  if (key == 'g') {
+    gameOver = true;
   }
 }
 
@@ -171,9 +185,9 @@ class Asteroid extends Floater
 {
   private int rotationSpeed;
   public Asteroid() {
-    corners = 7;
-    int [] xC = {0, -10, -14, -10, 0, 10, 14, 10};
-    int [] yC = {-14, -10, 0, 10, 14, 10, 0, -10};
+    corners = 6;
+    int [] xC = {28, 24, -4, -26, -24, 0};
+    int [] yC = {0, 22, 28, 22, -12, -18};
     xCorners = xC;
     yCorners = yC;
     myColor = 200;
