@@ -131,7 +131,8 @@ class SpaceShip extends Floater
     int [] yC = {8, -8, 0};
     xCorners = xC;
     yCorners = yC;
-    myColor = 255;
+    myColor = color(132, 138, 140);
+    stroke(0, 255, 0);
     setX(250);
     setY(250);
     setDirectionX(0);
@@ -243,7 +244,7 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
   protected int corners;  //the number of corners, a triangular floater has 3   
   protected int[] xCorners;   
   protected int[] yCorners;   
-  protected int myColor;   
+  protected int myColor;  
   protected double myCenterX, myCenterY; //holds center coordinates   
   protected double myDirectionX, myDirectionY; //holds x and y coordinates of the vector for direction of travel   
   protected double myPointDirection; //holds current direction the ship is pointing in degrees    
