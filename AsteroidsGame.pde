@@ -9,10 +9,14 @@ boolean spacePressed = false;
 boolean gameOver = false;
 ArrayList <Bullet> bullet;
 ArrayList <Asteroid> asteroid;
+double dist;
+double far;
+int numBullets;
 
 public void setup() 
 {
   //your code here
+  numBullets = 0;
   size(500,500);
   background(0);
   ship = new SpaceShip();
@@ -34,6 +38,13 @@ public void draw()
   for(int m = 0; m < asteroid.size(); m++) {
   asteroid.get(m).move();
   asteroid.get(m).show();
+  dist = dist(asteroid.get(m).getX(), asteroid.get(m).getY(), ship.getX(), ship.getY());
+ if(dist < 27)
+ {
+ asteroid.remove(m);
+ asteroid.add(new Asteroid());
+ gameOver = true;
+ }
   }
   for(int i = 0; i < star.length; i++)
   {
@@ -45,6 +56,20 @@ public void draw()
   {
     bullet.get(j).move();
     bullet.get(j).show();
+  }
+
+for(int m = 0; m < asteroid.size(); m++)
+  {
+    for(int n = 0; n < bullet.size(); n++)
+    {
+      far = dist(asteroid.get(m).getX(), asteroid.get(m).getY(), bullet.get(n).getX(), bullet.get(n).getY());
+      if(far < 19)
+        {
+          asteroid.remove(m);
+          bullet.remove(n);
+          asteroid.add(new Asteroid());
+        }
+    }
   }
 
   if (leftPressed == true) {
@@ -60,7 +85,8 @@ public void draw()
     ship.accelerate(-0.1);
   }
   if (spacePressed == true) {
-    bullet.add(new Bullet(ship));   
+    bullet.add(new Bullet(ship)); 
+    numBullets++;  
   }
   if (gameOver == true) {
    fill(0, 0, 255, 50); 
@@ -70,6 +96,11 @@ public void draw()
    text("Game Over!", 160, 150);
    textSize(25);
    text("Press 'r' to restart.", 145, 200);
+   ship.setDirectionX(0);
+   ship.setDirectionY(0);
+  }
+  if (gameOver == false) {
+
   }
 }
 
@@ -99,6 +130,14 @@ public void keyPressed()
   }
   if (key == 'g') {
     gameOver = true;
+  }
+  if (key == 'r') {
+    gameOver = false; 
+    for(int i = 0; i < bullet.size(); i++) {
+    bullet.remove(i);
+  }
+    ship.setX(250);
+    ship.setY(250);
   }
 }
 
@@ -336,3 +375,8 @@ class Stars
     ellipse(starX, starY, starSize, starSize);
   }
 }
+
+// to-do
+//game over
+//making asteroids disappear
+//start game
