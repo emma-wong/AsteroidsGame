@@ -12,11 +12,13 @@ ArrayList <Asteroid> asteroid;
 double dist;
 double far;
 int numBullets;
+int gameScore;
 
 public void setup() 
 {
   //your code here
   numBullets = 0;
+  gameScore = 0;
   size(500,500);
   background(0);
   ship = new SpaceShip();
@@ -35,6 +37,9 @@ public void draw()
 {
   //your code here
   background(0);
+  fill(255);
+  textSize(14);
+  text("Score: " + gameScore, 410, 25);
   for(int m = 0; m < asteroid.size(); m++) {
   asteroid.get(m).move();
   asteroid.get(m).show();
@@ -68,6 +73,7 @@ for(int m = 0; m < asteroid.size(); m++)
           asteroid.remove(m);
           bullet.remove(n);
           asteroid.add(new Asteroid());
+          gameScore++;
         }
     }
   }
@@ -96,6 +102,8 @@ for(int m = 0; m < asteroid.size(); m++)
    text("Game Over!", 160, 150);
    textSize(25);
    text("Press 'r' to restart.", 145, 200);
+    for(int i = 0; i < bullet.size(); i++) {
+    bullet.remove(i); }
    ship.setDirectionX(0);
    ship.setDirectionY(0);
   }
@@ -132,6 +140,7 @@ public void keyPressed()
     gameOver = true;
   }
   if (key == 'r') {
+    gameScore = 0;
     gameOver = false; 
     for(int i = 0; i < bullet.size(); i++) {
     bullet.remove(i);
