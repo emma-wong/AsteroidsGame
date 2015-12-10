@@ -96,12 +96,13 @@ for(int m = 0; m < asteroid.size(); m++)
   }
   if (gameOver == true) {
    fill(0, 0, 255, 50); 
-   rect(0, 0, 500, 500);
+   rect(-10, -10, 600, 600);
    fill(255);
    textSize(35);
    text("Game Over!", 160, 150);
    textSize(25);
-   text("Press 'r' to restart.", 145, 200);
+   text("Score: " + gameScore, 205, 200);
+   text("Press 'r' to restart.", 145, 250);
     for(int i = 0; i < bullet.size(); i++) {
     bullet.remove(i); }
    ship.setDirectionX(0);
@@ -174,12 +175,12 @@ class SpaceShip extends Floater
   //your code here
   public SpaceShip()
   {
-    corners = 3;
-    int [] xC = {-12, -12, 12};
-    int [] yC = {8, -8, 0};
+    corners = 19;//3;
+    int [] xC = {-12, -12, -14, -14, -12, -12, -14, -14, -12, -12, -2, -2, 1, 1, 12, 1, 1, -2, -2};//{-12, -12, 12};
+    int [] yC = {8, 6, 6, 2, 2, -2, -2, -6, -6, -8, -5, -9, -9, -4, 0, 4, 9, 9, 5};//{8, -8, 0};
     xCorners = xC;
     yCorners = yC;
-    myColor = color(132, 138, 140);
+    myColor = color(0, 255, 0);
     stroke(0, 255, 0);
     setX(250);
     setY(250);
