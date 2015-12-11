@@ -9,7 +9,7 @@ boolean spacePressed = false;
 boolean gameOver = false;
 ArrayList <Bullet> bullet;
 ArrayList <Asteroid> asteroid;
-double dist;
+double numDist;
 double far;
 int numBullets;
 int gameScore;
@@ -43,8 +43,8 @@ public void draw()
   for(int m = 0; m < asteroid.size(); m++) {
   asteroid.get(m).move();
   asteroid.get(m).show();
-  dist = dist(asteroid.get(m).getX(), asteroid.get(m).getY(), ship.getX(), ship.getY());
- if(dist < 27)
+  numDist = dist(asteroid.get(m).getX(), asteroid.get(m).getY(), ship.getX(), ship.getY());
+ if(numDist < 27)
  {
  asteroid.remove(m);
  asteroid.add(new Asteroid());
